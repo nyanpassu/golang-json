@@ -1,8 +1,8 @@
 package json
 
 import (
-	"testing"
 	"errors"
+	"testing"
 )
 
 // TestUnmarshal .
@@ -37,7 +37,7 @@ func TestUnmarshal(t *testing.T) {
 					null
 				],
 				{
-					string": "string",
+					"string": "string",
 					"integer": 1,
 					"float": 2.3,
 					"true": true,
@@ -46,7 +46,7 @@ func TestUnmarshal(t *testing.T) {
 				}
 			],
 			{
-				string": "string",
+				"string": "string",
 				"integer": 1,
 				"float": 2.3,
 				"true": true,
@@ -61,7 +61,7 @@ func TestUnmarshal(t *testing.T) {
 					null
 				],
 				"object": {
-					string": "string",
+					"string": "string",
 					"integer": 1,
 					"float": 2.3,
 					"true": true,
@@ -86,7 +86,7 @@ func TestUnmarshal(t *testing.T) {
 				null
 			],
 			"object": {
-				string": "string",
+				"string": "string",
 				"integer": 1,
 				"float": 2.3,
 				"true": true,
@@ -96,8 +96,8 @@ func TestUnmarshal(t *testing.T) {
 		} 
 	}`
 	var (
-		any Any
-		err error
+		any           Any
+		err           error
 		objectMapping map[string]Any
 	)
 	if any, err = Unmarshal([]byte(jsonString)); err != nil {
@@ -107,7 +107,7 @@ func TestUnmarshal(t *testing.T) {
 	if objectMapping, err = any.ObjectValue(); err != nil {
 		t.Error(err)
 		return
-	} 
+	}
 	if err = assertString(objectMapping["string"]); err != nil {
 		t.Error(err)
 		return
