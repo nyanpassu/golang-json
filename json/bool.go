@@ -8,6 +8,11 @@ type boolNode struct {
 	value bool
 }
 
+// Bool .
+func Bool(value bool) Any {
+	return boolNode{value}
+}
+
 func newBoolNode(value bool) Any {
 	return boolNode{value}
 }
@@ -55,4 +60,8 @@ func (node boolNode) ArrayValue() ([]Any, error) {
 
 func (node boolNode) ObjectValue() (map[string]Any, error) {
 	return notObject(node.value)
+}
+
+func (node boolNode) Value() interface{} {
+	return node.value
 }

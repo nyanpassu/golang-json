@@ -8,6 +8,11 @@ type stringNode struct {
 	value string
 }
 
+// String .
+func String(str string) Any {
+	return stringNode{value: str}
+}
+
 func newStringNode(value string) Any {
 	return stringNode{value}
 }
@@ -55,4 +60,8 @@ func (node stringNode) ArrayValue() ([]Any, error) {
 
 func (node stringNode) ObjectValue() (map[string]Any, error) {
 	return notObject(node.value)
+}
+
+func (node stringNode) Value() interface{} {
+	return node.value
 }

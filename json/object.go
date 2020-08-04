@@ -4,6 +4,11 @@ type objectNode struct {
 	objectMapping map[string]Any
 }
 
+// Object .
+func Object(mapping map[string]Any) Any {
+	return objectNode{objectMapping: mapping}
+}
+
 func newObjectNode(src map[string]interface{}) (Any, error) {
 	mapping := make(map[string]Any)
 	for key, value := range src {
@@ -58,4 +63,12 @@ func (node objectNode) ArrayValue() ([]Any, error) {
 
 func (node objectNode) ObjectValue() (map[string]Any, error) {
 	return node.objectMapping, nil
+}
+
+func (node objectNode) Value() interface{} {
+	mapping := make(map[string]interface{})
+	for key, value := range node.objectMapping {
+		mapping[key] = value.Value()
+	}
+	return mapping
 }

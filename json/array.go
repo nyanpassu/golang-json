@@ -4,6 +4,11 @@ type arrayNode struct {
 	array []Any
 }
 
+// Array .
+func Array(objs ...Any) Any {
+	return arrayNode{array: objs}
+}
+
 func newArrayNode(src []interface{}) (Any, error) {
 	size := len(src)
 	array := make([]Any, size)
@@ -58,4 +63,13 @@ func (node arrayNode) ArrayValue() ([]Any, error) {
 
 func (node arrayNode) ObjectValue() (map[string]Any, error) {
 	return notObject(node.array)
+}
+
+func (node arrayNode) Value() interface{} {
+	size := len(node.array)
+	array := make([]interface{}, size)
+	for i := 0; i < size; i++ {
+		array[i] = node.array[i].Value()
+	}
+	return array
 }

@@ -10,9 +10,9 @@ import (
 type Any interface {
 	// true if node is null or undefined
 	Null() bool
-	// if node is string, then return string value
-	// nullnode will return ""
-	// otherwise return error
+	// return string value if is string
+	// return "" if null
+	// return error otherwise
 	StringValue() (string, error)
 	// will return the json format of node
 	AsText() (string, error)
@@ -33,8 +33,11 @@ type Any interface {
 	// return float64(value) when int
 	// return error otherwise
 	AsFloat() (float64, error)
-	// if node is string, will convert to bool by strconv.formatBool
-	// if node is int, then 0 is false, otherwise true
+	// return converted value by strconv.formatBool if is string
+	// return true if non zero
+	// return false if is zero
+	// return false if null
+	// return error otherwise
 	BoolValue() (bool, error)
 	// return bool value if node is bool
 	// return false if null | undefined
@@ -48,6 +51,8 @@ type Any interface {
 	// return nil if null | undefined
 	// otherwise return error
 	ObjectValue() (map[string]Any, error)
+	// return raw value
+	Value() interface{}
 }
 
 // Unmarshal .
@@ -57,6 +62,11 @@ func Unmarshal(data []byte) (Any, error) {
 		return nil, err
 	}
 	return newNode(src)
+}
+
+// Marshal .
+func Marshal(obj Any) ([]byte, error) {
+	return json.Marshal(obj.Value())
 }
 
 func newNode(src interface{}) (Any, error) {

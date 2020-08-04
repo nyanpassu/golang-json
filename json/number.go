@@ -10,6 +10,22 @@ type numberNode struct {
 	isInt      bool
 }
 
+// Int .
+func Int(i int64) Any {
+	return numberNode{
+		intValue: i,
+		isInt:    true,
+	}
+}
+
+// Float .
+func Float(f float64) Any {
+	return numberNode{
+		floatValue: f,
+		isInt:      false,
+	}
+}
+
 func newFloatNode(value float64) Any {
 	intValue := int64(value)
 	if value == float64(intValue) {
@@ -86,4 +102,11 @@ func (node numberNode) ArrayValue() ([]Any, error) {
 
 func (node numberNode) ObjectValue() (map[string]Any, error) {
 	return notObject(node.floatValue)
+}
+
+func (node numberNode) Value() interface{} {
+	if node.isInt {
+		return node.intValue
+	}
+	return node.floatValue
 }

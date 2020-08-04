@@ -2,6 +2,13 @@ package json
 
 type nullNode struct{}
 
+var null = nullNode{}
+
+// Null .
+func Null() Any {
+	return null
+}
+
 func newNullNode() Any {
 	return nullNode{}
 }
@@ -49,4 +56,8 @@ func (node nullNode) ArrayValue() ([]Any, error) {
 
 func (node nullNode) ObjectValue() (map[string]Any, error) {
 	return nil, nil
+}
+
+func (node nullNode) Value() interface{} {
+	return nil
 }
