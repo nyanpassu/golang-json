@@ -1,3 +1,3 @@
-module github.com/nyanpassu/golang-json/v2
+module github.com/nyanpassu/golang-json
 
-go 1.12
+go 1.14
