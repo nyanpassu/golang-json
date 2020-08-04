@@ -232,16 +232,21 @@ func assertString(src Any, value string) error {
 	if _, err := src.BoolValue(); err == nil {
 		return errors.New(`string node should return error by ::BoolValue`)
 	}
+	bValue, parseBoolError := strconv.ParseBool(value)
 	if b, err := src.AsBool(); err != nil {
-		return err
-	} else if b {
-		return errors.New(`null node should return false by ::AsBool`)
+		if parseBoolError == nil {
+			return fmt.Errorf("%v could parsed as bool", value)
+		}
+	} else if parseBoolError != nil {
+		return fmt.Errorf("%v couldn't parsed as bool", value)
+	} else if b != bValue {
+		return fmt.Errorf(`expecting parsed value %v, but is %v`, bValue, b)
 	}
 	if _, err := src.ArrayValue(); err == nil {
-		return errors.New(`null node should return err by ::ArrayValue`)
+		return errors.New(`string node should return err by ::ArrayValue`)
 	}
 	if _, err := src.ObjectValue(); err == nil {
-		return errors.New(`null node should return err by ::ObjectValue`)
+		return errors.New(`string node should return err by ::ObjectValue`)
 	}
 	return nil
 }
