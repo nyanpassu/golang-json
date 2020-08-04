@@ -5,6 +5,7 @@ import (
 	"errors"
 )
 
+// TestUnmarshal .
 func TestUnmarshal(t *testing.T) {
 	jsonString := `{
 		"string": "string",
